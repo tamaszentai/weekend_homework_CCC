@@ -1,11 +1,12 @@
 class Room
 
-  attr_reader :name, :capacity, :songs, :entry_fee, :guests
+  attr_reader :name, :capacity, :songs, :entry_fee, :guests, :lobby
   attr_writer :till
   def initialize(name, capacity, entry_fee)
     @name = name
     @capacity = capacity
     @songs = []
+    @lobby = []
     @guests = []
     @entry_fee = entry_fee
     @till = 0
@@ -23,11 +24,14 @@ class Room
     return @till
   end
 
+
+
  def check_in_guest(guest, entry_fee)
    if guest.wallet >= entry_fee
      guest.pay_entry_fee(entry_fee)
      @till += entry_fee
      @guests.push(guest)
+     return @guests.count()
    end
  end
 
@@ -43,8 +47,11 @@ class Room
  def not_enough_space
    if @guests.count > @capacity
      return "Not enough space in this room"
+   else
+     return "Welcome to the room!"
    end
  end
+
 
 
 end

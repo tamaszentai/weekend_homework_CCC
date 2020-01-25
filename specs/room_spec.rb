@@ -46,15 +46,23 @@ class RoomTest < MiniTest::Test
 
   def test_check_in_guest
     @room1.check_in_guest(@guest4, @room1.entry_fee)
-    assert_equal(1, @room1.guests.count())
+    assert_equal(1, @room1.guests_count())
     assert_equal(0, @guest4.wallet)
     assert_equal(20, @room1.till_count)
   end
 
+  def test_check_in_guest__not_enough_money
+    @room1.check_in_guest(@guest2, @room1.entry_fee)
+    assert_equal(0, @room1.guests_count())
+    assert_equal(15, @guest2.wallet)
+    assert_equal(0, @room1.till_count)
+  end
+
 
   def test_check_out_guest
-    @room1.check_in_guest(@guest1, @room1.entry_fee)
     @room1.check_in_guest(@guest4, @room1.entry_fee)
+    @room1.check_in_guest(@guest1, @room1.entry_fee)
+    @room1.check_in_guest(@guest2, @room1.entry_fee)
     @room1.check_out_guest(@guest1)
     assert_equal(1, @room1.guests_count)
   end
@@ -69,9 +77,20 @@ class RoomTest < MiniTest::Test
     @room1.check_in_guest(@guest1, @room1.entry_fee)
     @room1.check_in_guest(@guest4, @room1.entry_fee)
     @room1.check_in_guest(@guest3, @room1.entry_fee)
-    # assert_equal(3, @room1.guests_count())
+    assert_equal(3, @room1.guests_count())
     assert_equal("Not enough space in this room", @room1.not_enough_space)
   end
+
+
+  def test_not_enough_space__enough_space
+    @room1.check_in_guest(@guest1, @room1.entry_fee)
+    @room1.check_in_guest(@guest2, @room1.entry_fee)
+    @room1.check_in_guest(@guest3, @room1.entry_fee)
+    assert_equal(2, @room1.guests_count)
+    assert_equal("Welcome to the room!", @room1.not_enough_space)
+  end
+
+
 
 
 

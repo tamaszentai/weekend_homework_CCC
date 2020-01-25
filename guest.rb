@@ -12,9 +12,4 @@ class Guest
      @wallet -= entry_fee
    end
 
-  def guest_cheer(song)
-    if @favourite_song == song
-      return "Whooooo!"
-    end
-  end
- end
+end
