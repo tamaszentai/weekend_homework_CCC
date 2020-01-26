@@ -90,7 +90,9 @@ class RoomTest < MiniTest::Test
     assert_equal("Welcome to the room!", @room1.not_enough_space)
   end
 
-
+  def test_guest_can_cheer
+    assert_equal("Whooo", @room1.guest_can_cheer(@guest1, @songs))
+  end
 
 
 

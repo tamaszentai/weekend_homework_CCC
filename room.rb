@@ -1,12 +1,11 @@
 class Room
 
-  attr_reader :name, :capacity, :songs, :entry_fee, :guests, :lobby
+  attr_reader :name, :capacity, :songs, :entry_fee, :guests
   attr_writer :till
   def initialize(name, capacity, entry_fee)
     @name = name
     @capacity = capacity
     @songs = []
-    @lobby = []
     @guests = []
     @entry_fee = entry_fee
     @till = 0
@@ -53,5 +52,12 @@ class Room
  end
 
 
+  def guest_can_cheer(guest, song)
+    for song in @songs
+      if song == guest.favourite_song
+      end
+    end
+    return "Whooo"
+  end
 
 end
